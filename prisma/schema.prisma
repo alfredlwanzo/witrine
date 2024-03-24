@@ -1,0 +1,256 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model AppSettings {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  shortName String @default("") @map("short_name")
+  moto String @default("")
+  description String @default("")
+  logoUrl String @default("")
+  favicon String @default("")
+  currency Currency @default(CDF) // An iso currency code.
+  language AppLanguage @default(fr) // An iso language code
+  status AppStatus @default(OPENED)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AppLanguage {
+  en
+  fr
+}
+
+enum AppStatus {
+  OPENED
+  MAINTENANCE
+  CLOSED
+}
+
+enum Currency {
+  USD
+  CDF
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  names String
+  phone String @unique
+  role Role
+  blacklist Boolean @default(false)
+  cartId String? @unique @db.ObjectId
+  cart Cart? @relation(fields: [cartId],references: [id],onDelete: SetNull)
+  orders Order[]
+  productCategories ProductCategory[]
+  products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  CLIENT
+  EDITOR
+  SHOP_MANAGER
+  ADMIN
+  OWNER
+}
+
+model Image {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  src String
+  alt String? @default("")
+  products ImagesOnProducts[]
+  productCategories ProductCategory[]
+  productsImage Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ImagesOnProducts {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
+  imageId String @db.ObjectId
+  image Image @relation(fields: [imageId],references: [id], onDelete: Cascade)
+  assignedAt DateTime @default(now())
+}
+
+
+model ProductCategory {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    slug String @unique
+    imageId String? @db.ObjectId
+    image Image? @relation(fields: [imageId], references: [id], onDelete: SetNull)
+    parentId  String? @db.ObjectId
+    parent    ProductCategory? @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    children  ProductCategory[] @relation("ParentChild")
+    description String @default("")
+    public Boolean @default(true)
+    featured Boolean @default(false) //En vedette
+    products CategoriesOnProducts[]
+    createdById String @db.ObjectId
+    createdBy User @relation(fields: [createdById],references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CategoriesOnProducts {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  productCategoryId String @db.ObjectId
+  productCategory ProductCategory @relation(fields: [productCategoryId],references: [id], onDelete:NoAction, onUpdate:NoAction)
+  productId String @db.ObjectId
+  product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
+  assignedAt DateTime @default(now())
+}
+
+model ProductTag {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String? @default("")
+  products TagsOnProducts[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TagsOnProducts {
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+  productTagId String @db.ObjectId
+  productTag ProductTag @relation(fields: [productTagId],references: [id], onDelete: Cascade)
+  productId String @db.ObjectId
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  assignedAt DateTime @default(now())
+}
+
+model Product {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    slug String @unique
+    shortDescription String  @default("")
+    description String @default("")
+    imageId String? @db.ObjectId
+    image Image? @relation(fields: [imageId],references: [id], onDelete: SetNull)
+    images ImagesOnProducts[]
+    price Float
+    regularPrice Float 
+    status ProductStatus @default(DRAFT)
+    cartItems CartItem[]
+    stockQuantity Int 
+    categories CategoriesOnProducts[]
+    tags TagsOnProducts[]
+    isVirtual Boolean @default(false)
+    downloadable Boolean @default(false)
+    featured Boolean @default(false) //En vedette
+    createdById String @db.ObjectId
+    createdBy User @relation(fields: [createdById],references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum ProductStatus {
+  DRAFT
+  PENDING
+  PRIVATE
+  PUBLISH
+}
+
+model CartItem {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    productId String @db.ObjectId 
+    product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
+    name String
+    quantity Int
+    price Float
+    image String? @default("")
+    cartId String @db.ObjectId
+    cart Cart @relation(fields: [cartId],references: [id], onDelete: Cascade)
+    orderId String? @db.ObjectId
+    order Order? @relation(fields: [orderId],references: [id],onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  items CartItem[]
+  owner User?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  number String @unique
+  items CartItem[]
+  ownerId String? @db.ObjectId
+  owner User? @relation(fields: [ownerId],references: [id],onDelete: Cascade)
+  billing BillingInfo?
+  shipping ShippingInfo?
+  total_cart Float
+  shippingCost Float
+  total Float
+  status OrderStatus @default(PENDING)
+  isPaid Boolean
+  currency Currency
+  paymentMethodId String @db.ObjectId
+  paymentMethod PaymentMehod @relation(fields: [paymentMethodId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BillingInfo {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  names String
+  phone String
+  email String? @default("")
+  address String? @default("")
+  orderId String @unique  @db.ObjectId 
+  order Order @relation(fields: [orderId],references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ShippingInfo {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId String @unique @db.ObjectId
+  order Order @relation(fields: [orderId],references: [id], onDelete: Cascade)
+  names String? @default("")
+  country String
+  city String
+  address String? @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+  REFUNDED
+  ON_HOLD
+  TRASH
+}
+
+model PaymentMehod {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String? @default("")
+  isDefault Boolean @default(false)
+  orders Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
