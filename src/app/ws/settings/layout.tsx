@@ -29,7 +29,7 @@ export default function WSLayoutSettings({ children }: { children: React.ReactNo
           </div>
         </div>
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      <ResizableHandle />
       <ResizablePanel defaultSize={75} minSize={50} maxSize={75}>
         <div className="">{children}</div>
       </ResizablePanel>

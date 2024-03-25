@@ -7,6 +7,7 @@ import { FiHome, FiShoppingCart, FiUsers } from "react-icons/fi";
 import { PiGear } from "react-icons/pi";
 import { UserAvatar } from "@/components/user-avatar";
 import { Separator } from "@/components/ui/separator";
+import { TooltipWrap } from "@/components/tooltip-provider";
 
 export default function WSLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,39 +15,51 @@ export default function WSLayout({ children }: { children: React.ReactNode }) {
       <aside className="flex flex-col items-center p-3">
         <div className="flex flex-col gap-y-3">
           <Link href="/ws">
-            <Button variant="ghost" size="icon">
-              {/* <RxHome /> */}
-              <FiHome className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
+            <TooltipWrap content="Dashboard" side="right">
+              <Button variant="ghost" size="icon">
+                {/* <RxHome /> */}
+                <FiHome className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+            </TooltipWrap>
           </Link>
           <Link href="/ws/orders">
-            <Button variant="ghost" size="icon">
-              <FiShoppingCart className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
+            <TooltipWrap content="Commandes" side="right">
+              <Button variant="ghost" size="icon">
+                <FiShoppingCart className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+            </TooltipWrap>
           </Link>
           <Link href="/ws/products">
-            <Button variant="ghost" size="icon">
-              <RxBoxModel className="h-[1.2rem] w-[1.2rem]" />
-              {/* <BsBoxSeam className=" -translate-x-1 -v" /> */}
-            </Button>
+            <TooltipWrap content="Produits" side="right">
+              <Button variant="ghost" size="icon">
+                <RxBoxModel className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+            </TooltipWrap>
           </Link>
           <Link href="/ws/customers">
-            <Button variant="ghost" size="icon">
-              <FiUsers className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
+            <TooltipWrap content="Clients" side="right">
+              <Button variant="ghost" size="icon">
+                <FiUsers className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+            </TooltipWrap>
           </Link>
         </div>
         <div className="flex-1" />
         <div className="flex flex-col gap-y-3">
-          <ModeToggle />
-          <Separator/>
+          <TooltipWrap content="Thème" side="right">
+            <ModeToggle />
+          </TooltipWrap>
+          <Separator />
           <Link href="/ws/settings">
-            <Button variant="ghost" size="icon">
-              {/* <RxGear /> */}
-              <PiGear className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
+            <TooltipWrap content="Paramètres" side="right">
+              <Button variant="ghost" size="icon">
+                <PiGear className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+            </TooltipWrap>
           </Link>
-          <UserAvatar />
+          <TooltipWrap content="Compte" side="right">
+            <UserAvatar />
+          </TooltipWrap>
         </div>
       </aside>
       <main className="flex-1 rounded-tl-xl border-l border-t">{children}</main>

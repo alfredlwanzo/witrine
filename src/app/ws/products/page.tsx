@@ -13,7 +13,7 @@ export default function WSPageProducts() {
   return (
     <div>
       <div className=" h-16 border-b px-3 flex items-center gap-x-3">
-        <Avatar className="">
+        <Avatar className=" rounded-lg">
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>PN</AvatarFallback>
         </Avatar>
