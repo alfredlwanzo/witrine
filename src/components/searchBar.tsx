@@ -1,41 +1,39 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
 
-export const SearchBar = () => {
-  // const { register, handleSubmit } = useForm();
+type Props = {
+  showBtn?: boolean;
+  onValueChange: (data: { value?: string }) => void;
+};
 
-  const onSubmitSearch = (data: { stringToSearch?: string }) => {
-    const { stringToSearch } = data;
-   
-  };
+export function SearchBar({ showBtn = false, onValueChange }: Props) {
+  const { register, handleSubmit } = useForm();
+
   return (
-    <form className="relative flex" 
-    // onSubmit={handleSubmit(onSubmitSearch)}
-    >
+    <form className="relative flex" onSubmit={handleSubmit(onValueChange)}>
       <FiSearch className=" absolute text-muted-foreground left-2  top-3" />
       <Input
         type="search"
         size={1}
         placeholder="Rechercher ..."
         className="flex-1 pl-8 pr-3 border-none focus:border-solid bg-muted"
-        // {...register("stringToSearch", {
-        //   required: true,
-        // })}
+        {...register("value", {
+          required: true,
+        })}
       />
-      {/* <Button
-        type="submit"
-        className={cn(" absolute right-0 rounded-l-none ")}
-        variant="outline"
-      >
-        Rechercher
-      </Button> */}
+      {showBtn && (
+        <Button
+          type="submit"
+          className={cn(" absolute right-0 rounded-l-none ")}
+          variant="outline"
+        >
+          Rechercher
+        </Button>
+      )}
     </form>
   );
-};
-
-
-
+}

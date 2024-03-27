@@ -1,32 +1,73 @@
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { RxBoxModel } from "react-icons/rx";
-import { FiHome, FiShoppingCart, FiUsers } from "react-icons/fi";
-import { PiGear } from "react-icons/pi";
-import { UserAvatar } from "@/components/user-avatar";
-import { Separator } from "@/components/ui/separator";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Menubar, MenubarMenu } from "@/components/ui/menubar";
+import { WSMenu } from "@/components/ws/menu";
+import { FiUsers } from "react-icons/fi";
+import { RxDesktop, RxQuestionMark } from "react-icons/rx";
 
-
-export default function WSLayoutSettings({ children }: { children: React.ReactNode }) {
+export default function WSLayoutSettings({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <ResizablePanelGroup direction="horizontal" className="min-h-screen  rounded-tl-xl ">
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="h-screen  rounded-tl-xl "
+    >
       <ResizablePanel defaultSize={25}>
-        <div className="flex flex-col h-full  p-3">
-          <div className="flex items-center h-8">
-            <h1 className=" font-bold flex-1">Paramètres</h1>
-            <Menubar>
-              <MenubarMenu>
-              Profiles
-              </MenubarMenu>
-            </Menubar>
+        <div className="flex flex-col h-full  px-3">
+          <div className="h-16 flex items-center ">
+            <h1 className="font-bold flex-1">Paramètres</h1>
           </div>
+          <WSMenu
+            items={[
+              {
+                key: "general",
+                label: "Général",
+                href: "/ws/settings",
+                icon: <RxDesktop className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "storage",
+                label: "Stockage",
+                href: "/ws/settings/storage",
+                icon: <RxDesktop className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "shippings",
+                label: "Livraisons",
+                href: "/ws/settings/shipping",
+                icon: <RxDesktop className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "payments",
+                label: "Paiements",
+                href: "/ws/settings/payment",
+                icon: <RxDesktop className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "users",
+                label: "Utilisateurs",
+                href: "/ws/settings/users",
+                icon: <FiUsers className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "general",
+                label: "Géneral",
+                href: "/ws",
+                icon: <RxDesktop className="h-[1.2rem] w-[1.2rem]" />,
+              },
+              {
+                key: "assistance",
+                label: "Assistance",
+                href: "/ws/assistance",
+                icon: <RxQuestionMark className="h-[1.2rem] w-[1.2rem]" />,
+              },
+            ]}
+          />
         </div>
       </ResizablePanel>
       <ResizableHandle />
