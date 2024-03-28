@@ -8,10 +8,10 @@ export default function WSPageCustomers() {
     return <div>
       <div className=" h-16 border-b px-3 flex items-center gap-x-3">
         <div>
-          <h1 className="text-sm font-bold">
-            #8765343{}
+          <h1 className="text-sm ">
+            Commande
           </h1>
-          <p className="  text-muted-foreground text-sm lowercase">commande</p>
+          <p className="  text-muted-foreground text-sm lowercase font-bold">#8765343{}</p>
         </div>
         <div className="flex-1" />
         <TooltipWrap content="Modifier">

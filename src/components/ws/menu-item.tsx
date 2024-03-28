@@ -15,20 +15,18 @@ export type WSMenuItemType = {
 
 type Props = {
   item: WSMenuItemType;
-  size?: "icon" | "full";
 };
-export function WSMenuItem({ item, size = "full" }: Props) {
+export function WSMenuItem({ item }: Props) {
   const pathname = usePathname();
   return (
     <Link key={item.key} href={item.href} className={cn(pathname === item.href && " bg-muted"," rounded-md hover:bg-muted")}>
       <TooltipWrap content={item.label} side="right">
         <Button
           variant="ghost"
-          size={size === "full" ? "default" : "icon"}
+          size="icon"
           className={cn( "relative")}
         >
           {item.icon}
-          <span className={cn("ml-3",size==="full"?"block":"hidden")}>{item.label}</span>
           <span
             className={cn(
               pathname === item.href ? "block" : "hidden",

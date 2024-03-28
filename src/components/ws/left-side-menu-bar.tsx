@@ -41,7 +41,7 @@ const menuItems: WSMenuItemType[] = [
 export function LeftSideMenuBar() {
   return (
     <aside className="h-full flex flex-col items-center p-3">
-      <WSMenu items={menuItems} type="icon" />
+      <WSMenu items={menuItems}  />
       <div className="flex-1" />
       <nav className="flex flex-col gap-y-3">
         <ModeToggle />
@@ -53,7 +53,6 @@ export function LeftSideMenuBar() {
             icon: <PiGear className="h-[1.2rem] w-[1.2rem]" />,
             href: "/ws/settings",
           }}
-          size="icon"
         />
         <UserAvatar />
       </nav>
