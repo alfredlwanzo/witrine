@@ -18,7 +18,7 @@ export function Customers() {
           <LiaTagSolid className="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </div>
-      <ListCustomers withSearchBar className="h-[calc(100vh-168px)] 2xl:h-[calc(920px-168px)]"  />
+      <ListCustomers withSearchBar className="h-[calc(100vh-169px)] 2xl:h-[calc(920px-169px)]"  />
     </div>
   );
 }

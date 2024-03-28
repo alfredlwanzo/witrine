@@ -69,7 +69,7 @@ export function Products() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <ListProducts withSearchBar className="h-[calc(100vh-168px)] 2xl:h-[calc(920px-168px)]" />
+      <ListProducts withSearchBar className="h-[calc(100vh-169px)] 2xl:h-[calc(920px-169px)]" />
     </div>
   );
 }

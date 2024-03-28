@@ -4,7 +4,8 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
-import { RxSun, RxMoon, RxDesktop } from "react-icons/rx";
+import { RxSun, RxMoon } from "react-icons/rx";
+import { TbDeviceDesktop } from "react-icons/tb";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +38,7 @@ export function ModeToggle() {
           Sombre
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          <RxDesktop className="mr-2" /> Système par défaut
+          <TbDeviceDesktop className="mr-2" /> Système par défaut
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
