@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function WSPaymentsPage() {
@@ -15,14 +21,16 @@ export default function WSPaymentsPage() {
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Paiement à la livraison</CardTitle>
-              <CardDescription>Du cash à la livraison</CardDescription>
+              <CardDescription>Cash à la livraison</CardDescription>
             </CardHeader>
             <CardContent></CardContent>
           </Card>
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Mobile money (FlexPay)</CardTitle>
-              <CardDescription>Airtel money, M-pesa, Orange money, Africel money</CardDescription>
+              <CardDescription>
+                Airtel money, M-pesa, Orange money, Africel money
+              </CardDescription>
             </CardHeader>
             <CardContent></CardContent>
           </Card>
