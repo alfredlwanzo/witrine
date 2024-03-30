@@ -37,7 +37,7 @@ export default function WSPageSettings() {
                 <Input />
               </div>
             </CardContent>
-            <CardFooter className="flex border-t pt-6">
+            <CardFooter className="flex ">
               <p className="flex-1 text-sm text-muted-foreground ">N&apos;oubliez pas de sauvegarder après chaque modification</p>
               <Button variant="outline" className="">Sauvegarder</Button>
             </CardFooter>
